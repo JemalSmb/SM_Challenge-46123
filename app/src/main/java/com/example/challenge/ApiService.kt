@@ -1,15 +1,29 @@
 package com.example.challenge
 
 import retrofit2.http.GET
-import retrofit2.http.Headers
 import retrofit2.http.Query
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
+object RetrofitInstance {
+    val api: TmdbApiService by lazy {
+        Retrofit.Builder()
+            .baseUrl("https://api.themoviedb.org/3/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(TmdbApiService::class.java)
+    }
+}
 
 interface TmdbApiService {
-    @Headers("Authorization: e1baaf1b2f17a0021c006faa1fba5c61")
     @GET("movie/top_rated")
-    suspend fun getTopRatedMovies(@Query("language") language: String = "en-US", @Query("page") page: Int = 1): MovieResponse
+    suspend fun getTopRatedMovies(
+        @Query("api_key") apiKey: String,
+    ): MovieResponse
 
-    @Headers("Authorization: e1baaf1b2f17a0021c006faa1fba5c61")
     @GET("tv/top_rated")
-    suspend fun getTopRatedTvShows(@Query("language") language: String = "en-US", @Query("page") page: Int = 1): TvShowResponse
+    suspend fun getTopRatedTvShows(
+        @Query("api_key") apiKey: String,
+    ): TvShowResponse
 }
+
