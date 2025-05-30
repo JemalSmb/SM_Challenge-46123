@@ -24,7 +24,7 @@ class MainViewModel : ViewModel() {
     private fun loadMovies() {
         viewModelScope.launch {
             try {
-                val response = RetrofitInstance.api.getTopRatedMovies()
+                val response = RetrofitInstance.api.getTopRatedMovies("e1baaf1b2f17a0021c006faa1fba5c61")
                 _movieState.value = _movieState.value.copy(
                     list = response.results,
                     loading = false,
@@ -42,7 +42,7 @@ class MainViewModel : ViewModel() {
     private fun loadTvShows() {
         viewModelScope.launch {
             try {
-                val response = RetrofitInstance.api.getTopRatedTvShows()
+                val response = RetrofitInstance.api.getTopRatedTvShows("e1baaf1b2f17a0021c006faa1fba5c61")
                 _tvShowState.value = _tvShowState.value.copy(
                     list = response.results,
                     loading = false,
