@@ -2,25 +2,26 @@ package com.example.challenge
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import com.google.gson.annotations.SerializedName
 
-data class TvShowResponse(
-    val results: List<TvShow>
+data class MovieResponse(
+    val results: List<Movie>
 )
 
 @Parcelize
-data class TvShow(
+data class Movie(
     val id: Int,
-    val name: String,
-    val original_name: String,
+    val title: String,
+    val original_title: String,
     val overview: String,
     val poster_path: String?,
     val backdrop_path: String?,
     val vote_average: Float,
     val vote_count: Int,
-    val first_air_date: String,
+    val release_date: String,
     val genre_ids: List<Int>,
-    val origin_country: List<String>,
+    val adult: Boolean,
     val original_language: String,
     val popularity: Float,
-    val adult: Boolean
+    val video: Boolean
 ): Parcelable
