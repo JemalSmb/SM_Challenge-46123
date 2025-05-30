@@ -1,8 +1,7 @@
 package com.example.challenge
 
-
-sealed class Screen(val route:String) {
-    object BookScreen:Screen("bookscreen")
-    object DetailScreen:Screen("detailscreen")
-
+sealed class Screen(val route: String) {
+    object HomeScreen : Screen("homescreen")
+    object MovieDetailScreen : Screen("moviedetailscreen")
+    object TvShowDetailScreen : Screen("tvshowdetailscreen")
 }
