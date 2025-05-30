@@ -10,7 +10,7 @@ import coil.compose.rememberAsyncImagePainter
 
 @Composable
 fun TvShowDetailScreen(tvShow: TvShow) {
-    Column(modifier = Modifier.padding(16.dp).padding(8.dp)) {
+    Column(modifier = Modifier.padding(16.dp).padding(top = 8.dp)) {
         Image(
             painter = rememberAsyncImagePainter("https://image.tmdb.org/t/p/w500${tvShow.poster_path}"),
             contentDescription = tvShow.name,
