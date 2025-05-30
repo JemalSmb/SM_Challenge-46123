@@ -1,16 +1,15 @@
 package com.example.challenge
 
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Headers
+import retrofit2.http.Query
 
-private val retrofit = Retrofit.Builder().baseUrl("https://my-json-server.typicode.com/JemalSmb/json_data/")
-    .addConverterFactory(GsonConverterFactory.create())
-    .build()
+interface TmdbApiService {
+    @Headers("Authorization: e1baaf1b2f17a0021c006faa1fba5c61")
+    @GET("movie/top_rated")
+    suspend fun getTopRatedMovies(@Query("language") language: String = "en-US", @Query("page") page: Int = 1): MovieResponse
 
-val bookService = retrofit.create(ApiService::class.java)
-
-interface ApiService {
-    @GET("db")
-    suspend fun getBooks(): BooksResponse
+    @Headers("Authorization: e1baaf1b2f17a0021c006faa1fba5c61")
+    @GET("tv/top_rated")
+    suspend fun getTopRatedTvShows(@Query("language") language: String = "en-US", @Query("page") page: Int = 1): TvShowResponse
 }
