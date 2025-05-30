@@ -9,6 +9,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
@@ -22,27 +23,39 @@ fun HomeScreen(
 ) {
     var selectedTab by remember { mutableStateOf(0) }
     val tabs = listOf("Movies", "TV Shows")
-
-    Column(
-        modifier = modifier.padding(top = 8.dp)
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = Color(0xFF1A237E)
     ) {
-        TabRow(selectedTabIndex = selectedTab) {
-            tabs.forEachIndexed { index, title ->
-                Tab(
-                    selected = selectedTab == index,
-                    onClick = { selectedTab = index },
-                    text = { Text(title) }
-                )
+        Column(modifier = modifier.padding(top = 64.dp)) {
+            Text(
+                "Top Rated TvShows/Movies",
+                style = MaterialTheme.typography.headlineLarge,
+                color = Color.White,
+                modifier = Modifier.padding(16.dp).align(Alignment.CenterHorizontally)
+            )
+
+            TabRow(selectedTabIndex = selectedTab, containerColor = Color(0xFF1A237E),
+                contentColor = Color.White,
+                modifier = modifier.padding(bottom = 12.dp)){
+                tabs.forEachIndexed { index, title ->
+                    Tab(
+                        selected = selectedTab == index,
+                        onClick = { selectedTab = index },
+                        text = { Text(title) }
+                    )
+                }
             }
-        }
-        when (selectedTab) {
-            0 -> MovieGrid(movieState.list) { movie ->
-                navController.currentBackStackEntry?.savedStateHandle?.set("movie", movie)
-                navController.navigate(Screen.MovieDetailScreen.route)
-            }
-            1 -> TvShowGrid(tvShowState.list) { tvShow ->
-                navController.currentBackStackEntry?.savedStateHandle?.set("tvshow", tvShow)
-                navController.navigate(Screen.TvShowDetailScreen.route)
+            when (selectedTab) {
+                0 -> MovieGrid(movieState.list) { movie ->
+                    navController.currentBackStackEntry?.savedStateHandle?.set("movie", movie)
+                    navController.navigate(Screen.MovieDetailScreen.route)
+                }
+
+                1 -> TvShowGrid(tvShowState.list) { tvShow ->
+                    navController.currentBackStackEntry?.savedStateHandle?.set("tvshow", tvShow)
+                    navController.navigate(Screen.TvShowDetailScreen.route)
+                }
             }
         }
     }
@@ -64,7 +77,7 @@ fun MovieGrid(movies: List<Movie>, onClick: (Movie) -> Unit) {
                     modifier = Modifier.size(80.dp)
                 )
                 Spacer(Modifier.width(8.dp))
-                Text(movie.title, style = MaterialTheme.typography.titleMedium)
+                Text(movie.title, style = MaterialTheme.typography.titleMedium, color = Color.White)
             }
         }
     }
@@ -86,7 +99,7 @@ fun TvShowGrid(tvShows: List<TvShow>, onClick: (TvShow) -> Unit) {
                     modifier = Modifier.size(80.dp)
                 )
                 Spacer(Modifier.width(8.dp))
-                Text(tvShow.name, style = MaterialTheme.typography.titleMedium)
+                Text(tvShow.name, style = MaterialTheme.typography.titleMedium, color = Color.White)
             }
         }
     }
