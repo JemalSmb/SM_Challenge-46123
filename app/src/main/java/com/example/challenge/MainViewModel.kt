@@ -9,35 +9,63 @@ import java.lang.Exception
 
 class MainViewModel : ViewModel() {
 
-    private val _bookState = mutableStateOf(BookState())
-    val booksState: State<BookState> = _bookState
+    private val _movieState = mutableStateOf(MovieState())
+    val movieState: State<MovieState> = _movieState
+
+    private val _tvShowState = mutableStateOf(TvShowState())
+    val tvShowState: State<TvShowState> = _tvShowState
+
 
     init {
-        loadBooks()
+        loadMovies()
+        loadTvShows()
     }
 
-    private fun loadBooks() {
+    private fun loadMovies() {
         viewModelScope.launch {
             try {
-                val response = bookService.getBooks()
-                _bookState.value = _bookState.value.copy(
-                    list = response.books,
+                val response = RetrofitInstance.api.getTopRatedMovies()
+                _movieState.value = _movieState.value.copy(
+                    list = response.results,
                     loading = false,
                     error = null
                 )
-
             } catch (e: Exception) {
-                _bookState.value = _bookState.value.copy(
+                _movieState.value = _movieState.value.copy(
                     loading = false,
-                    error = "Error fetching Books ${e.message}"
+                    error = "Error fetching Movies: ${e.message}"
                 )
             }
         }
     }
 
-    data class BookState(
+    private fun loadTvShows() {
+        viewModelScope.launch {
+            try {
+                val response = RetrofitInstance.api.getTopRatedTvShows()
+                _tvShowState.value = _tvShowState.value.copy(
+                    list = response.results,
+                    loading = false,
+                    error = null
+                )
+            } catch (e: Exception) {
+                _tvShowState.value = _tvShowState.value.copy(
+                    loading = false,
+                    error = "Error fetching TV Shows: ${e.message}"
+                )
+            }
+        }
+    }
+
+    data class MovieState(
         val loading: Boolean = true,
-        val list: List<Book> = emptyList(),
+        val list: List<Movie> = emptyList(),
+        val error: String? = null
+    )
+
+    data class TvShowState(
+        val loading: Boolean = true,
+        val list: List<TvShow> = emptyList(),
         val error: String? = null
     )
 }
