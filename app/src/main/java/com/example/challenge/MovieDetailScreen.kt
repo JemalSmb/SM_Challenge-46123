@@ -10,7 +10,7 @@ import coil.compose.rememberAsyncImagePainter
 
 @Composable
 fun MovieDetailScreen(movie: Movie) {
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column(modifier = Modifier.padding(16.dp).padding(8.dp)) {
         Image(
             painter = rememberAsyncImagePainter("https://image.tmdb.org/t/p/w500${movie.poster_path}"),
             contentDescription = movie.title,
